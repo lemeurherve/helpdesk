@@ -6,11 +6,11 @@ jobs:
   place_order:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'npm'
+      # - uses: actions/checkout@v2
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+      #     cache: 'npm'
 
       - uses: stefanbuck/github-issue-praser@v2
         id: issue-parser
@@ -22,8 +22,12 @@ jobs:
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
 
       - run: cat issue.json
-
-      - run: node ./place-order.js
+      - name: Archive results
+        uses: actions/upload-artifact@v3
+        with:
+          name: parsed-issue
+          path: issue.json
+      # - run: node ./place-order.js
 
       # - name: Commit changes
       #   shell: bash
