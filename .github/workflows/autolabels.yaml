@@ -5,6 +5,7 @@ on:
 jobs:
   autolabels:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       # - uses: actions/checkout@v2
       # - uses: actions/setup-node@v2
