@@ -18,21 +18,18 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/1-report-issue.yml
 
-      # - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}'
-      # - run: echo '${{ steps.issue-parser.outputs.jsonString }} | jq '.[].services'
-      # - run: echo '${{ fromJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services'
-      - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
-      # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
-      # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]'
+      # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
+      # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
+      # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
+      # - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
 
-      - run: cat issue.json | jq '.[].service
-      - name: Archive results
-        uses: actions/upload-artifact@v3
-        with:
-          name: parsed-issue.json
-          path: issue.json
+      # - run: cat issue.json | jq '.[].service
+      # - name: Archive results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: parsed-issue.json
+      #     path: issue.json
       # - run: node ./place-order.js
 
       # - name: Commit changes
