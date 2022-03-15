@@ -20,15 +20,13 @@ jobs:
 
       - run: echo "ISSUE_LABELS=$(echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]' | sed 's/"//g')" >> $GITHUB_ENV
         id: extract-and-format-services
-      - run: echo ${{ steps.issue-parser.outputs.jsonString.*.services }}
-      - run: echo ${{ env.ISSUE_LABELS }}
 
       - uses: andymckay/labeler@master
         id: labeler
         with:
-          # add-labels: ${{ env.ISSUE_LABELS }}
-          add-labels: ${{ join(steps.issue-parser.outputs.jsonString.*.services, ', ') }}
-          # remove-labels: "in progress"
+          add-labels: ${{ env.ISSUE_LABELS }}
+          #add-labels: ${{ join(steps.issue-parser.outputs.jsonString.*.services, ', ') }}
+          remove-labels: "other"
 
       # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
       # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
