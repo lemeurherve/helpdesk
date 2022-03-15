@@ -18,6 +18,7 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/1-report-issue.yml
 
+      - run: echo '${{ steps.issue-parser.outputs.jsonString.*.services }}' | tr '[:upper:]' '[:lower:]'
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]'
       # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
       # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
