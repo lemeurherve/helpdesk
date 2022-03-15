@@ -17,16 +17,16 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/1-report-issue.yml
 
-      - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}'
-      - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
-      - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
+      # - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}'
+      - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}\'\' | jq '.[].services'
+      # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
 
       - run: cat issue.json
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
-          name: parsed-issue
+          name: parsed-issue.json
           path: issue.json
       # - run: node ./place-order.js
 
