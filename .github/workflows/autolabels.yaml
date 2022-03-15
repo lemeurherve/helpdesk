@@ -20,7 +20,7 @@ jobs:
 
       # - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}'
       # - run: echo '${{ steps.issue-parser.outputs.jsonString }} | jq '.[].services'
-      - run: echo '${{ fromJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
+      # - run: echo '${{ fromJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
       - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
       - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
       # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
