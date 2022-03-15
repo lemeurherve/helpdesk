@@ -18,13 +18,13 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/1-report-issue.yml
 
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]'
+      - run: echo "ISSUE_LABELS="$(echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
         id: extract-and-format-services
 
       - uses: andymckay/labeler@master
         id: labeler
         with:
-          add-labels: ${{ steps.extract-and-format-services.outputs }}
+          add-labels: ${{ env.ISSUE_LABELS }}
           # remove-labels: "in progress"
 
       # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
