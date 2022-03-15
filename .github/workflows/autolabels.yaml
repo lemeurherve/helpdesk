@@ -24,7 +24,8 @@ jobs:
       - uses: andymckay/labeler@master
         id: labeler
         with:
-          add-labels: ${{ env.ISSUE_LABELS }}
+          # add-labels: ${{ env.ISSUE_LABELS }}
+          add-labels: ${{ join(steps.issue-parser.outputs.jsonString.*.services, ', ') }}
           # remove-labels: "in progress"
 
       # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
