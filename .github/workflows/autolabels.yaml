@@ -21,12 +21,12 @@ jobs:
       # - run: echo '${{ toJSON(steps.issue-parser.outputs.jsonString) }}'
       # - run: echo '${{ steps.issue-parser.outputs.jsonString }} | jq '.[].services'
       # - run: echo '${{ fromJSON(steps.issue-parser.outputs.jsonString) }} | jq '.[].services'
-      - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[].service'
-      - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
+      # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[].service'
+      # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
       # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
 
-      - run: cat issue.json
+      - run: cat issue.json | jq '.[].service
       - name: Archive results
         uses: actions/upload-artifact@v3
         with:
