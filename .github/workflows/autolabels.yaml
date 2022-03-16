@@ -1,64 +1,18 @@
-name: Process order
+name: Autolabeler
 on:
   issues:
     types: [opened, edited]
 jobs:
-  autolabels:
+  autolabeler:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '16'
-      #     cache: 'npm'
-
       - uses: stefanbuck/github-issue-praser@v2
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/1-report-issue.yml
-
-      - run: echo "ISSUE_LABELS=$(echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]' | sed 's/"//g')" >> $GITHUB_ENV
-        id: extract-and-format-services
-
+      - run: echo "ISSUE_LABELS=$(echo '${{ steps.issue-parser.outputs.jsonString }}' | jq '.services' | tr '[:upper:]' '[:lower:]' | sed 's/"//g' | sed 's/ //g')" >> $GITHUB_ENV
       - uses: andymckay/labeler@master
-        id: labeler
         with:
           add-labels: ${{ env.ISSUE_LABELS }}
-          #add-labels: ${{ join(steps.issue-parser.outputs.jsonString.*.services, ', ') }}
           remove-labels: "other"
-
-      # - run: echo "'${{ toJSON(steps.issue-parser.outputs.jsonString) }}'" | jq '.[]'
-      # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString)) }} | jq '.[].services'
-      # # - run: echo '${{ fromJSON(toJSON(steps.issue-parser.outputs.jsonString.services)) }}'
-      # - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > issue.json
-
-      # - run: cat issue.json | jq '.[].service
-      # - name: Archive results
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: parsed-issue.json
-      #     path: issue.json
-      # - run: node ./place-order.js
-
-      # - name: Commit changes
-      #   shell: bash
-      #   run: |
-      #     git config --global user.email "github-actions[bot]@users.noreply.github.com" && \
-      #     git config --global user.name "github-actions[bot]" && \
-      #     git add README.md && \
-      #     git commit -m 'Place order' && \
-      #     git push
-      # - uses: peter-evans/close-issue@v1
-      #   with:
-      #     comment: Pizza time! Check out the <a href="../">README</a>.
-
-
-      # if: contains(github.event.pull_request.labels.*.name, 'some-defined-label')
-
-
-
-      # - uses: actions-ecosystem/action-add-labels@v1
-      #   if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
-      #   with:
-      #     labels: bug
