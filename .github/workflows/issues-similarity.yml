@@ -9,12 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.issue.state == 'open'
     steps:
-      - name: Dump GitHub github.event.issue
-        id: github_context_step
-        run: echo '${{ toJSON(github.event.issue.state) }}'
       - name: analysis
         uses: actions-cool/issues-similarity-analysis@v1.0.0
-        if: github.event.issue.state == 'open'
         with:
           filter-threshold: 0.7
           title-excludes: 'bug, jenkins'
