@@ -11,9 +11,9 @@ jobs:
     steps:
       - name: Dump GitHub github.event.issue
         id: github_context_step
-        run: echo '${{ toJSON(github.event.issue) }}'
+        run: echo '${{ toJSON(github.event.issue.state) }}'
       - name: analysis
-        if: github.event.issue.state == 'open'
+        if: github.event.issue.state = 'open'
         uses: actions-cool/issues-similarity-analysis@v1.0.0
         with:
           filter-threshold: 0.7
