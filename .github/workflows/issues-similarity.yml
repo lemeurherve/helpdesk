@@ -13,7 +13,7 @@ jobs:
         id: github_context_step
         run: echo '${{ toJSON(github.event.issue.state) }}'
       - name: analysis
-        if: github.event.issue.state = 'open'
+        if: github.event.issue.state != 'closed'
         uses: actions-cool/issues-similarity-analysis@v1.0.0
         with:
           filter-threshold: 0.7
