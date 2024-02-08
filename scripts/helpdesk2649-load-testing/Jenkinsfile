@@ -1,0 +1,11 @@
+pipeline {
+    agent any
+    stages {
+        stage('Load testing') {
+            steps {
+                echo 'Running load tests...'
+                sh './load-test.sh'
+            }
+        }
+    }
+}
